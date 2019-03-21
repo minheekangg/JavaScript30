@@ -31,28 +31,64 @@
 
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    let fifteenHundredthBabies = inventors.filter(e=> e.year <= 1599 && e.year > 1499)
+    console.table("1.", fifteenHundredthBabies)
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors' first and last names
+    let names = inventors.map(e=> {return e.first +" "+ e.last})
+    console.table("2.", names)
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    let sortedByBdate = inventors.sort((a,b) => {return a.year - b.year})
+    console.log("3.", sortedByBdate)
+
+      let createYear = inventors.map(each=>{
+        return each.age = (each.passed - each.year)
+      })
+      console.log(createYear)
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live?
+    let totalAge = inventors.reduce((total, b) => {return (total +(b.passed - b.year))}, 0)
+    console.log("4,",totalAge)
+
+
 
     // 5. Sort the inventors by years lived
-
+      let sortedByYearsLived= inventors.sort((a, b) => { return (b.passed-b.year) - (a.passed-a.year) },)
+      console.log("5.", sortedByYearsLived)
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
-
+    //  const links = document.querySelectorAll('#mw-pages a')
+    //  const de = []
+    //  links.forEach(e => { e.title.includes('de') ? de.push(e) : null })
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+      let sortedByFirstName = people.sort((a,b)=> {
+        let splitNameA = a.split(', ')
+        let splitNameB = b.split(', ')
+        // console.log(splitNameA[1], splitNameB[1])
+        return splitNameA[1] > splitNameB[1] ? 1 : -1
+      })
+      console.log("7,", sortedByFirstName)
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+
+    //   let test = data.filter((v,i,a)=> a.indexOf(v) === i)
+    //   console.log("test", test)
+    const newArr = data.reduce((obj, item)=> {
+      if (!obj[item]){
+        obj[item] = 0;
+      } 
+        obj[item]++;
+        return obj;
+    }, {})
+    console.log(newArr)
 
   </script>
 </body>

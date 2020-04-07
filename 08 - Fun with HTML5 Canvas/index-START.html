@@ -7,11 +7,35 @@
 <body>
 <canvas id="draw" width="800" height="800"></canvas>
 <script>
-</script>
+  const canvas = document.querySelector('#draw');
+  const context = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight; // resize canvas width and height to take on the actual window
 
+  context.strokeStyle = '#BADA55';
+  context.lineJoin = 'round';
+  context.lineCap = 'round';
+
+  let isDrawing = false; //flag to only trigger on mousedown
+  let lastX = 0;
+  let lastY = 0; //line needs a start and end.
+
+  function draw(e){
+    if (!isDrawing) return; //stop fn from running if not drawing (not mousedown)
+    console.log('e', e)
+  }
+  canvas.addEventListener('mousemove', draw);
+  canvas.addEventListener('mousedown', () => isDrawing = true);
+  canvas.addEventListener('mouseup', () => isDrawing = false);
+  canvas.addEventListener('mouseout', () => isDrawing = false);
+
+</script>
 <style>
   html, body {
     margin: 0;
+  }
+  canvas {
+    border: 1px solid red;
   }
 </style>
 

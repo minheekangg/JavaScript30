@@ -11,23 +11,42 @@
   const context = canvas.getContext('2d');
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight; // resize canvas width and height to take on the actual window
-
   context.strokeStyle = '#BADA55';
   context.lineJoin = 'round';
   context.lineCap = 'round';
+  context.lineWidth = 50;
 
   let isDrawing = false; //flag to only trigger on mousedown
   let lastX = 0;
   let lastY = 0; //line needs a start and end.
+  let hue = 0; //0-360
 
   function draw(e){
     if (!isDrawing) return; //stop fn from running if not drawing (not mousedown)
-    console.log('e', e)
+    context.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+    context.beginPath(); //start from
+    context.moveTo(lastX, lastY); //go to
+    context.lineTo(e.offsetX, e.offsetY);
+    context.stroke(); //this does the drawing
+    // lastX = e.offsetX;
+    // lastY = e.offsetY;
+    [lastX, lastY] = [e.offsetX, e.offsetY] //ES6 version of above - "destructuring an array";
+    hue++;
+    if (hue >= 360) {hue = 0};
+    if (context.lineWidth >=50 || context.lineWidth <= 1) {
+      context.lineWidth--;
+    } else {
+      context.lineWidth++;
+    }
+    console.log('linewidth is', context.lineWidth)
   }
+  canvas.addEventListener('mousedown', (e) => {
+      isDrawing = true;
+      [lastX, lastY] = [e.offsetX, e.offsetY];
+  }); //will happen before mousemove
   canvas.addEventListener('mousemove', draw);
-  canvas.addEventListener('mousedown', () => isDrawing = true);
   canvas.addEventListener('mouseup', () => isDrawing = false);
-  canvas.addEventListener('mouseout', () => isDrawing = false);
+  canvas.addEventListener('mouseout', () => isDrawing = false); //out of window should turn off
 
 </script>
 <style>

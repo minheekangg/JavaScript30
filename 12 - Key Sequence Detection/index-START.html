@@ -7,6 +7,19 @@
 </head>
 <body>
 <script>
+  const pressedArray = [];
+  const secretCode = "hello world";
+
+  window.addEventListener('keyup', (e)=> {
+    pressedArray.push(e.key);
+    pressedArray.splice(-secretCode.length-1, (pressedArray.length - secretCode.length));
+    console.log('pressed', pressedArray)
+
+    if (pressedArray.join("").includes(secretCode)) {
+      console.warn('ding ding');
+      cornify_add();
+    }
+  })
 </script>
 </body>
 </html>

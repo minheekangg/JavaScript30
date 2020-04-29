@@ -8,9 +8,22 @@
 
   <script>
     // start with strings, numbers and booleans
+    let age = 20;
+    let ageCopy = age;
+    age = 30; 
+    console.log(age, ageCopy); // will return  (30, 20) bc ageCopy copied age when it was 20!!!!
+
+    let name = 'wes';
+    let nameCopy = name;
+    name = 'diff name';
+    console.log(name, nameCopy) // ('diff name', 'wes') for the same reason as above!
 
     // Let's say we have an array
     const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+    const team = players;
+    team[3] = 'Lux';
+    //console.log(team, players); 
+    //UPDATES COPY + ORIGINAL!!!!!!!!!!!!!!!!!
 
     // and we want to make a copy of it.
 
@@ -27,10 +40,24 @@
     // So, how do we fix this? We take a copy instead!
 
     // one way
+    const copyOfTeam = team.slice();
+    copyOfTeam[0] = 'NEW NAME WOAH'
+    console.log(team, copyOfTeam);
 
     // or create a new array and concat the old one in
+    const copy2Team = [].concat(team);
+    copy2Team[0] = "NEW NAME COPY";
+    console.log('copy 2', copy2Team, team);
 
     // or use the new ES6 Spread
+    const copy3Team = [...team];
+    copy3Team[0] = "THIRD NAME COPY";
+    console.log('copy 3', copy3Team, team);
+
+
+    const copy4Team = Array.from(team);
+    copy4Team[0] = "FOURTH NAME COPY";
+    console.log('copy 4', copy4Team, team);
 
     // now when we update it, the original one isn't changed
 
@@ -43,8 +70,14 @@
     };
 
     // and think we make a copy:
+    const personCopy = person;
+    personCopy['third'] = 3;
+    console.log('incorrect copy', person, personCopy);
 
     // how do we take a copy instead?
+     const personRealCopy =  Object.assign({}, person, {newKey: 'newValue'});
+    console.log('correct obj copy', person, personRealCopy);
+   
 
     // We will hopefully soon see the object ...spread
 

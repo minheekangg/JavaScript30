@@ -28,7 +28,7 @@
 <script>
   const addItems = document.querySelector('.add-items');
   const itemsList = document.querySelector('.plates');
-  const items = [];
+  const items = JSON.parse(localStorage.getItem('items')) || [];
 
   function addItem(e) {
     e.preventDefault();
@@ -41,11 +41,38 @@
     }
     // console.log('item', item) //  {text: "input", done: false}
     items.push(item);
-
+    populateList(items, itemsList);
+    localStorage.setItem('items', JSON.stringify(items)); //LOCALSTORAGE ONLY USES STRINGS. need to stringify.
     this.reset(); //clear form
   }
 
+  function populateList(plates = [], platesList) {
+    platesList.innerHTML = plates.map((plate,i)=> {
+      return `
+        <li>
+          <input type="checkbox" data-index=${i} id="item${i}" ${plate.done ? 'checked' : ''} />
+          <label for="item${i}">${plate.text}</label>
+        </li>
+      `
+    }).join('');
+  }
+
+  function toggleDone(e) {
+    //console.log(e.target) // shows parent that's clicked + child
+    if (!e.target.matches('input')) return; //remove parent input
+    const el = e.target;
+    const index = el.dataset.index;
+    items[index].done = !items[index].done;
+    console.log(items);
+    localStorage.setItem('items', JSON.stringify(items));
+    populateList(items, itemsList);
+  }
+
   addItems.addEventListener('submit', addItem);
+  itemsList.addEventListener('click', toggleDone); //place toggle on responsible parent instead of negligent children
+
+  populateList(items, itemsList);
+
 
 </script>
 

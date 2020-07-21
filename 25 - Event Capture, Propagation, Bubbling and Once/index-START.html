@@ -42,7 +42,26 @@
 
 <button></button>
 <script>
+const divs = document.querySelectorAll('div');
 
+function logText(e) {
+  // e.stopPropagation();
+  console.log(this.classList.value);
+}
+
+divs.forEach(div=>div.addEventListener('click', logText, {
+  // capture: true
+  once: true
+}))
+
+
+
+/*
+NOTES: 
+- events capture down - then bubble up.
+- in addEventListener if the option (third input) is set to capture true, it will be called when captureing down happens.
+- eg for above: for the divs here, instead of logging: three-two-one for the divs bubbling up, it will log one-two-three, logging when the capture is happening.
+*/
 </script>
 </body>
 </html>

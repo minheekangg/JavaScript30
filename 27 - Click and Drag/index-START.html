@@ -35,7 +35,39 @@
   </div>
 
 <script>
-</script>
+  const slider = document.querySelector('.items');
+  let isDown = false;
+  let startX;
+  let scrollLeft;
 
+  slider.addEventListener('mousedown', e => {
+    isDown = true;
+    slider.classList.add('active');
+    // startX = e.pageX; //tells x coordinates on page but won't know where e is relative to window - offset!
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+  });
+  slider.addEventListener('mouseleave', () => {
+    isDown = false;
+    slider.classList.remove('active');
+  });
+  slider.addEventListener('mouseup', () => {
+    isDown = false;
+    slider.classList.remove('active');
+  });
+  slider.addEventListener('mousemove', e => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - slider.offsetLeft;
+    // console.log(isDown,'dowork!', {startX, x})
+    // const walk = x - startX; //how far we've deviated from initial x, right++, left--.
+    const walk = (x - startX) * 2; //multiply to create more 
+    slider.scrollLeft = scrollLeft - walk; //gimmicky if not used saved scrollLeft bc tries to recalculate!
+
+  });
+
+
+
+</script>
   </body>
 </html>

@@ -27,8 +27,7 @@ function timer(seconds) {
 
 
 function displayTwoDigits(input) {
-    if (input > 10) return input;
-    return "0" + input;
+    return input > 10 ? input : "0" + input;
 }
 
 function displayTimeLeft(seconds) {
